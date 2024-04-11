@@ -19,8 +19,10 @@ import javafx.scene.control.Label;
 import java.io.File;
 import java.io.IOException;
 
-public class main extends Application {
-    public final String imageDir = System.getProperty("user.dir") + "/src/main/Images/";
+public class application extends Application {
+    public final String blankIcon = Main.class.getResource("/images/blankIcon.png").toString();
+    public final String iconO = Main.class.getResource("/images/iconO.png").toString();
+    public final String iconX = Main.class.getResource("/images/iconX.png").toString();
     public String[] board = { "", "", "", "", "", "", "", "", "" };
     public ImageView[] images = new ImageView[9];
     public boolean gameStatus = true;
@@ -88,8 +90,7 @@ public class main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 for (int i = 0; i < 9; i++) {
-                    File file = new File(imageDir + "blank.png");
-                    Image blankImage = new Image(file.toString());
+                    Image blankImage = new Image(blankIcon);
                     images[i].setImage(blankImage);
                     board[i] = "";
                 }
@@ -103,10 +104,8 @@ public class main extends Application {
 
     private void handleTile(MouseEvent event) {
         if (gameStatus) {
-            File iconX = new File(imageDir + "iconX.png");
-            File iconO = new File(imageDir + "iconO.png");
-            Image imageX = new Image(iconX.toString());
-            Image imaegO = new Image(iconO.toString());
+            Image imageX = new Image(iconX);
+            Image imageO = new Image(iconO);
             ImageView source = (ImageView) event.getSource();
             String[] arrOfStr = source.getId().split("tile");
             int index = Integer.parseInt(arrOfStr[1]);
@@ -122,7 +121,7 @@ public class main extends Application {
             }
             if (currentPlayer == "O") {
                 if (board[index] != "X") {
-                    source.setImage(imaegO);
+                    source.setImage(imageO);
                     board[index] = "O";
                     text.setText("Current Turn: Player 1");
                     declareWinner();
@@ -134,8 +133,7 @@ public class main extends Application {
 
     public void createTiles() {
         for (int i = 0; i < 9; i++) {
-            File file = new File(imageDir + "blank.png");
-            Image image = new Image(file.toString());
+            Image image = new Image(blankIcon);
             ImageView tile = new ImageView(image);
             tile.setCache(true);
             tile.setPickOnBounds(true);
